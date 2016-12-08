@@ -27,6 +27,6 @@ if [[ -n $KAFKA_CREATE_TOPICS ]]; then
     IFS=','; for topicToCreate in $KAFKA_CREATE_TOPICS; do
         echo "creating topics: $topicToCreate" 
         IFS=':' read -a topicConfig <<< "$topicToCreate"
-        JMX_PORT='' $KAFKA_HOME/bin/kafka-topics.sh --create --zookeeper $KAFKA_ZOOKEEPER_CONNECT --replication-factor ${topicConfig[2]} --partition ${topicConfig[1]} --topic "${topicConfig[0]}" --config cleanup.policy=compact --config min.cleanable.dirty.ratio=0.01 
+        JMX_PORT='' $KAFKA_HOME/bin/kafka-topics.sh --create --zookeeper $KAFKA_ZOOKEEPER_CONNECT --replication-factor ${topicConfig[2]} --partition ${topicConfig[1]} --topic "${topicConfig[0]}" --config cleanup.policy=compact --config min.cleanable.dirty.ratio=0.01 --config segment.ms=60000
     done
 fi
